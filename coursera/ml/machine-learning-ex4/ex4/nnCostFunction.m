@@ -82,9 +82,21 @@ h = sigmoid(X2*Theta2');
 
 [K p] = max(h, [], 2);
 
-
 % Unregularized
-J = 1/m * ( -y' * log(h) - (1 - y)' * log (1-h) );
+for i = 1:m
+
+	hi = zeros(num_labels, 1);
+	hi(p(i)) = 1;
+
+	yi = zeros(num_labels, 1);
+	yi(y(i)) = 1;
+
+	yi
+	hi
+	yi' * log(hi)
+
+	J = J + 1/m * ( -yi' * log(hi) - (1 - yi)' * log (1-hi) );
+end
 %grad = 1 / m * X' * (h - y);
 
 %theta1 = theta;
@@ -93,8 +105,6 @@ J = 1/m * ( -y' * log(h) - (1 - y)' * log (1-h) );
 % Adding regularization terms
 %J = J + lambda / 2 / m * theta1' * theta1;
 %grad = grad + lambda / m * theta1;
-
-fprintf('Size of J: %f\n', size(J));
 
 
 % -------------------------------------------------------------
