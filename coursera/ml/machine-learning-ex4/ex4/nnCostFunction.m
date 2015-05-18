@@ -90,6 +90,20 @@ for i = 1:m
 	end
 end
 
+% Adding regularization terms
+
+for j = 1:hidden_layer_size
+	for k = 1:input_layer_size
+		J += lambda/2/m * Theta1(j, k+1)^2;
+	end
+end
+
+for j = 1:num_labels
+	for k = 1:hidden_layer_size
+		J += lambda/2/m * Theta2(j, k+1)^2;
+	end
+end
+
 % Unregularized
 
 
