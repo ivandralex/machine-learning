@@ -47,7 +47,7 @@ grad = 1 / m * X' * (h - y);
 theta1 = theta;
 theta1(1) = 0;
 
-% ADding regularization terms
+% Adding regularization terms
 J = J + lambda / 2 / m * theta1' * theta1;
 grad = grad + lambda / m * theta1;
 
