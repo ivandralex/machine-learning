@@ -88,7 +88,28 @@ for i = 1:m
 
 		J += 1/m * ( -Y(i, k)' * log(h(i, k)) - (1 - Y(i, k))' * log (1-h(i, k)) );
 	end
+
+	% Vectors of errors
+	delta3 = zeros(num_labels, 1);
+	delta2 = zeros(hidden_layer_size + 1, 1);
+	delta1 = zeros(input_layer_size + 1, 1);
+
+	% delta3: 10 x 1
+	delta3 = (h(i) - Y(i, :))';
+	delta2 = (Theta2' * delta3) .* ((X2(i, :) .* (1 - X2(i, :)))');
+	% delta2: 25 x 1
+	delta2 = delta2(2:end);
+
+	size(delta3)
+	size(delta2)
+	return;
+
+	Theta1_grad = Theta1_grad + delta2*X1(i, :);
+	Theta2_grad = Theta2_grad + delta3*X2(i, :);
 end
+
+Theta1_grad = Theta1_grad .* (1/m);
+Theta2_grad = Theta2_grad .* (1/m);
 
 % Adding regularization terms
 
