@@ -103,8 +103,14 @@ for i = 1:m
 	Theta2_grad = Theta2_grad + delta_3*X2(i, :);
 end
 
-Theta1_grad = Theta1_grad ./ m;
-Theta2_grad = Theta2_grad ./ m;
+reg1 = lambda/m * Theta1;
+reg1(:, 1) = 0;
+
+reg2 = lambda/m * Theta2;
+reg2(:, 1) = 0;
+
+Theta1_grad = Theta1_grad ./ m + reg1;
+Theta2_grad = Theta2_grad ./ m + reg2;
 
 % Adding regularization terms
 
