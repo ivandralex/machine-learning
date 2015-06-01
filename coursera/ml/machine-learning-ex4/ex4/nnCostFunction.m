@@ -76,11 +76,11 @@ delta2 = zeros(hidden_layer_size + 1, 1);
 
 % X1: 5000 x 401
 X1 = [ones(m, 1) X];
-
-% X2: 5000 x 25
-X2 = sigmoid(X1*Theta1');
+A2 = X1*Theta1';
 % X2: 5000 x 26
+X2 = sigmoid(A2);
 X2 = [ones(m, 1) X2];
+A2 = [ones(m, 1) A2];
 % X3: 5000 x 10
 h = sigmoid(X2*Theta2');
 % Recoding (y(i) equals to the number of output)
@@ -95,16 +95,16 @@ for i = 1:m
 
 	% delta3: 10 x 1
 	delta3 = (h(i) - Y(i, :))';
-	delta2 = (Theta2' * delta3) .* ((X2(i, :) .* (1 - X2(i, :)))');
+	delta2 = (Theta2' * delta3) .* ((X2(i, :)' .* (1 - X2(i, :))'));
 	% delta2: 25 x 1
 	delta2 = delta2(2:end);
-
+    
 	Theta1_grad = Theta1_grad + delta2*X1(i, :);
 	Theta2_grad = Theta2_grad + delta3*X2(i, :);
 end
 
-Theta1_grad = Theta1_grad .* (1/m);
-Theta2_grad = Theta2_grad .* (1/m);
+Theta1_grad = Theta1_grad ./ m;
+Theta2_grad = Theta2_grad ./ m;
 
 % Adding regularization terms
 
