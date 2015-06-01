@@ -71,8 +71,8 @@ Theta2_grad = zeros(size(Theta2));
 % input_layer_size: 400
 
 % Vectors of errors
-delta3 = zeros(num_labels, 1);
-delta2 = zeros(hidden_layer_size + 1, 1);
+delta_3 = zeros(num_labels, 1);
+delta_2 = zeros(hidden_layer_size + 1, 1);
 
 % X1: 5000 x 401
 X1 = [ones(m, 1) X];
@@ -93,14 +93,14 @@ for i = 1:m
 		J += 1/m * ( -Y(i, k)' * log(h(i, k)) - (1 - Y(i, k))' * log (1-h(i, k)) );
 	end
 
-	% delta3: 10 x 1
-	delta3 = (h(i) - Y(i, :))';
-	delta2 = (Theta2' * delta3) .* ((X2(i, :)' .* (1 - X2(i, :))'));
-	% delta2: 25 x 1
-	delta2 = delta2(2:end);
+	% delta_3: 10 x 1
+	delta_3 = (h(i, :) - Y(i, :))';
+	delta_2 = (Theta2' * delta_3) .* ((X2(i, :) .* (1 - X2(i, :)))');
+	% delta_2: 25 x 1
+	delta_2 = delta_2(2:end);
     
-	Theta1_grad = Theta1_grad + delta2*X1(i, :);
-	Theta2_grad = Theta2_grad + delta3*X2(i, :);
+	Theta1_grad = Theta1_grad + delta_2*X1(i, :);
+	Theta2_grad = Theta2_grad + delta_3*X2(i, :);
 end
 
 Theta1_grad = Theta1_grad ./ m;
