@@ -27,7 +27,7 @@ centroids = zeros(K, n);
 %
 for i = 1:K
   mask = (idx == i);
-  centroids(i, :) =  sum(X .* mask) ./ sum(mask);
+  centroids(i, :) =  (X' * mask) ./ sum(mask);
 end
 % =============================================================
 end
