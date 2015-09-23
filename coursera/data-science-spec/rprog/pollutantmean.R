@@ -6,8 +6,10 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
     data <- read.csv(path)
     
     sublist <- data[, pollutant]
+    good <- complete.cases(sublist)
+    sublist <- sublist[good]
+    pollutantList <- append(pollutantList, sublist)
   }
   
-  print(sublist)
+  mean(sapply(pollutantList, mean))
 }
-
