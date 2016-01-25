@@ -45,6 +45,9 @@ A = (X * Theta' - Y) .* R;
 
 J = sum(sum( A .^ 2 / 2 ));
 
+J += lambda / 2 * sum(sum(Theta .* Theta));
+J += lambda / 2 * sum(sum(X .* X));
+
 Theta_grad = (X * Theta' - Y)' .* R' * X;
 
 X_grad = (X * Theta' - Y) .* R * Theta;
