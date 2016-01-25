@@ -45,22 +45,13 @@ A = (X * Theta' - Y) .* R;
 
 J = sum(sum( A .^ 2 / 2 ));
 
-for i = 1:num_movies
-	for j = 1:num_users
-		if R(i, j) == 1
-		end
-	end
-end
+Theta_grad = (X * Theta' - Y)' .* R' * X;
 
-for j = 1:num_users
-	for i = 1:num_movies
-
-	end
-end
-
+X_grad = (X * Theta' - Y) .* R * Theta;
 
 % =============================================================
 
 grad = [X_grad(:); Theta_grad(:)];
+
 
 end
