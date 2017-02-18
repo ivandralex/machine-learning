@@ -4,6 +4,8 @@ from sklearn import model_selection
 from sklearn import svm
 import numpy as np
 
+out = open('./res.txt', 'w+')
+
 newsgroups = datasets.fetch_20newsgroups(subset='all', categories=['alt.atheism', 'sci.space'])
 
 y = newsgroups.target
@@ -43,4 +45,7 @@ for info in newlist[0:10]:
 print words
 
 words = sorted(words)
-print ','.join(words)
+res = ' '.join(words)
+
+out.write(res)
+out.close()
