@@ -6,7 +6,7 @@ import math
 data = pandas.read_csv('./data-logistic.csv', header=None).as_matrix()
 
 def sigmoid(row, w):
-    return 1 / (1 + math.exp(-row[0]*(w[0]*row[1] + w[1]*row[2])))
+    return 1 / (1 + math.exp(-w[0]*row[1] - w[1]*row[2]))
 
 
 def gradient_descent(data, C):
@@ -22,9 +22,8 @@ def gradient_descent(data, C):
     for step in range(n):
         for j in range(2):
             s = 0
-            for i in range(l):
-                row = data[i]
-                s = s + row[0]*row[j+1]*(1 - sigmoid(row, w))
+            for row in data:
+                s = s + row[0]*row[j+1]*(1 - 1 / (1 + math.exp(-row[0]*(w[0]*row[1] + w[1]*row[2]))))
             newW[j] = w[j] + k/l*s - k*C*w[j]
 
         #Check if calculations converged
