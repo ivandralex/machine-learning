@@ -8,7 +8,7 @@ newsgroups = datasets.fetch_20newsgroups(subset='all', categories=['alt.atheism'
 
 y = newsgroups.target
 
-vectorizer = TfidfVectorizer(min_df=1)
+vectorizer = TfidfVectorizer()
 X = vectorizer.fit_transform(newsgroups.data)
 
 feature_mapping = vectorizer.get_feature_names()
@@ -22,10 +22,8 @@ gs.fit(X, y)
 best = gs.cv_results_['params'][gs.best_index_]
 print best
 
-clf = svm.SVC(kernel='linear', random_state=241, C=best['C'])
+clf = svm.SVC(C=best['C'], kernel='linear', random_state=241)
 clf.fit(X, y)
-
-print clf.coef_
 
 coef = clf.coef_.todense().A1
 
@@ -36,9 +34,6 @@ for i,c in enumerate(coef):
     coef_map.append(coef_info)
 
 newlist = sorted(coef_map, key=lambda k: -k['coef'])
-
-print newlist[0:10]
-print newlist[10:20]
 
 words = []
 
